@@ -1,0 +1,70 @@
+service: serverless-email-signup
+
+# Use the serverless-webpack plugin to transpile ES6
+plugins:
+  - serverless-webpack
+# serverless-webpack configuration
+# Enable auto-packing of external modules
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: prod
+  region: us-east-1
+  profile: aws-cli-profile-name
+
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+        - s3:ListObjects
+      Resource: "*"
+
+functions:
+  example:
+    handler: example.hello
+    environment:
+      POSTMARK_KEY: "PostMark UUID Here"
+    events:
+      - http:
+          path: messages
+          method: get
+  post:
+    handler: handler.post
+    environment:
+      POSTMARK_KEY: "PostMark UUID Here"
+      EMAIL_BUCKET: "Postmark Bucket Name Here"
+    events:
+      - http:
+          path: signup
+          method: post
+          cors: true
+          queryParameters:
+            email: $input.body('_replyto')
+            name: $input.body('name')
+            phone: $input.body('phone')
+            message: $input.body('message')
+            country: $input.body('country')
+
+  redirect:
+    handler: handler.redirect
+    events:
+      - http:
+          path: redirect
+          method: get

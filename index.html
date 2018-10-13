@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Full-Stack Apprenticeship</title>
+    <meta name="description" content="Boilerplate for Lambda based Form-Fill Signup with Email & DynamoDB Functionality"/>
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400,600,700" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+  </head>
+  <body id="top">
+    <header>
+        <div class="container">
+          <h1>Full-Stack Apprenticeship</h1>
+        </div>
+    </header>
+    <div class="row">
+        <h3 class="h5">Early Access Invitation</h3>
+        <form action="https://endpoint.execute-api.us-east-1.amazonaws.com/prod/signup" method="POST">
+              <input class="bg-light form-control" type="text" name="name" placeholder="*Name" required="required"/>
+              <input class="bg-light form-control" type="email" name="_replyto" placeholder="*Your Email Address" required="required"/>
+              <input class="bg-light form-control" type="text" name="phone" placeholder="Your Phone Number" />
+              <input type="hidden" name="country" value="United States">
+              <br /> <br />
+              <textarea class="bg-light mb-2 form-control" name="message" placeholder="*Your Message" rows="5" required="required"></textarea>
+              <br /><br />
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+      </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="scripts/main.js"></script>
+  </body>
+</html>
